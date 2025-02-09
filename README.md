@@ -8,6 +8,11 @@ _**Overview**_
 
 _This Repo provides detailed instructions on deploying a secure, automated data pipeline from On-Prem SQL Server to Azure Blob Storage and Power BI Embedded using Azure Data Factory (ADF). The architecture ensures high security, automation, and governance, integrating with Azure DevOps, Terraform, PowerShell, and Git._
 
+
+<p align="center">
+  <img src="docs/images/sql-adf-blob-pbi.jpg" alt="onprem-to-cloud">
+</p>
+
 _**Architecture Components**_
 
 **On-Prem**
