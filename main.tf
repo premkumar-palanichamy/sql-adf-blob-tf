@@ -126,3 +126,74 @@ module "vm" {
   tags         = var.tags
   adf_auth_key = module.adf.auth_key_1
 }
+
+################################################
+# PowerBI Automation
+################################################
+
+resource "azurerm_key_vault_secret" "pbi_client_id" {
+  name         = "powerbi-client-id"
+  value        = var.pbi_client_id
+  key_vault_id = azurerm_key_vault.kv.id
+}
+
+resource "azurerm_key_vault_secret" "pbi_client_secret" {
+  name         = "powerbi-client-secret"
+  value        = var.pbi_client_secret
+  key_vault_id = azurerm_key_vault.kv.id
+}
+
+resource "azurerm_key_vault_secret" "pbi_tenant_id" {
+  name         = "powerbi-tenant-id"
+  value        = var.pbi_tenant_id
+  key_vault_id = azurerm_key_vault.kv.id
+}
+
+resource "azurerm_key_vault_secret" "pbi_group_id" {
+  name         = "powerbi-group-id"
+  value        = var.pbi_group_id
+  key_vault_id = azurerm_key_vault.kv.id
+}
+
+resource "azurerm_key_vault_secret" "pbi_dataset_id" {
+  name         = "powerbi-dataset-id"
+  value        = var.pbi_dataset_id
+  key_vault_id = azurerm_key_vault.kv.id
+}
+
+resource "azurerm_automation_account" "automation" {
+  name                = "pbiAutomation"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  sku_name            = "Basic"
+}
+
+
+data "local_file" "powerbi_ps1" {
+  filename = "${path.module}/refresh_powerbi.ps1"
+}
+resource "azurerm_automation_runbook" "refresh_powerbi" {
+  name                    = "PowerBI_Refresh"
+  location                = var.location
+  resource_group_name     = var.resource_group_name
+  automation_account_name = azurerm_automation_account.automation.name
+  log_verbose             = "true"
+  log_progress            = "true"
+  runbook_type            = "PowerShell"
+  content                 = data.local_file.powerbi_ps1 # Uploads PowerShell script
+}
+resource "azurerm_automation_schedule" "schedule" {
+  name                    = "EveryHour"
+  resource_group_name     = var.resource_group_name
+  automation_account_name = azurerm_automation_account.automation.name
+  frequency               = "Hour"
+  interval                = 1
+  timezone                = "UTC"
+}
+
+resource "azurerm_automation_job_schedule" "powerbi_refresh_schedule" {
+  automation_account_name = azurerm_automation_account.automation.name
+  resource_group_name     = var.resource_group_name
+  runbook_name            = azurerm_automation_runbook.refresh_powerbi.name
+  schedule_name           = azurerm_automation_schedule.schedule.name
+}

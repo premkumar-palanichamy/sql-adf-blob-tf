@@ -598,3 +598,30 @@ variable "admin_password" {
   description = "The password for the virtual machine"
   type        = string
 }
+
+########## PowerBI Automation Vars ##########
+
+variable "pbi_client_id" {
+  description = "The client ID for PowerBI"
+  type        = string
+}
+
+variable "pbi_client_secret" {
+  description = "The client secret for PowerBI"
+  type        = string
+}
+
+variable "pbi_tenant_id" {
+  description = "The tenant ID for PowerBI"
+  type        = string
+}
+
+variable "pbi_group_id" {
+  description = "The group ID for PowerBI"
+  type        = string
+}
+
+variable "pbi_dataset_id" {
+  description = "The dataset ID for PowerBI"
+  type        = string
+}
