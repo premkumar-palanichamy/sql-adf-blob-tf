@@ -79,33 +79,50 @@ module "sa" {
 }
 
 module "kv" {
-  source                            = "./modules/kv"
-  kv_name                           = var.kv_name
-  resource_group_name               = var.resource_group_name
-  location                          = var.location
-  skuname                           = var.kv_skuname
-  enabled_for_deployment            = var.enabled_for_deployment
-  enabled_for_disk_encryption       = var.enabled_for_disk_encryption
-  enabled_for_template_deployment   = var.enabled_for_template_deployment
-  soft_delete_retention_days        = var.soft_delete_retention_days
-  purge_protection_enabled          = var.purge_protection_enabled
-  enable_rbac_authorization         = var.enable_rbac_authorization
-  tags                              = var.tags
-  principal_ids                     = var.principal_ids
-  role_definition_name              = var.role_definition_name
-  scope_id                          = var.scope_id
-  skip_service_principal_aad_check  = var.skip_service_principal_aad_check
+  source                           = "./modules/kv"
+  kv_name                          = var.kv_name
+  resource_group_name              = var.resource_group_name
+  location                         = var.location
+  skuname                          = var.kv_skuname
+  enabled_for_deployment           = var.enabled_for_deployment
+  enabled_for_disk_encryption      = var.enabled_for_disk_encryption
+  enabled_for_template_deployment  = var.enabled_for_template_deployment
+  soft_delete_retention_days       = var.soft_delete_retention_days
+  purge_protection_enabled         = var.purge_protection_enabled
+  enable_rbac_authorization        = var.enable_rbac_authorization
+  tags                             = var.tags
+  principal_ids                    = var.principal_ids
+  role_definition_name             = var.role_definition_name
+  scope_id                         = var.scope_id
+  skip_service_principal_aad_check = var.skip_service_principal_aad_check
 }
 
 module "law" {
-  source              = "./modules/law"
-  name = var.law_name
+  source                        = "./modules/law"
+  name                          = var.law_name
+  resource_group_name           = var.resource_group_name
+  location                      = var.location
+  law_sku                       = var.law_sku
+  retention_in_days             = var.retention_in_days
+  tags                          = var.tags
+  managed_identity_type         = var.managed_identity_type
+  managed_identity_ids          = var.managed_identity_ids
+  local_authentication_disabled = var.local_authentication_disabled
+}
+
+module "vm" {
+  source              = "./modules/vm"
+  vm_name             = var.vm_name
   resource_group_name = var.resource_group_name
   location            = var.location
-  law_sku             = var.law_sku
-  retention_in_days   = var.retention_in_days
-  tags                = var.tags
-  managed_identity_type = var.managed_identity_type
-  managed_identity_ids  = var.managed_identity_ids
-  local_authentication_disabled = var.local_authentication_disabled
+  vm_size             = var.vm_size
+  admin_username      = var.admin_username
+  admin_password      = var.admin_password
+  nic_id              = module.network.nic_id
+  vnet_name           = module.vnet.vnet_name
+  subnet_name         = module.vnet.subnet_name
+  public_ip           = module.vnet.public_ip
+  # storage_account_key  = module.sa.storage_account_primary_access_key
+  tags         = var.tags
+  adf_auth_key = module.adf.auth_key_1
 }

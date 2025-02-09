@@ -576,3 +576,25 @@ variable "local_authentication_disabled" {
   description = "Is local authentication disabled?"
   type        = bool
 }
+
+########## Virtual Machine Vars ##########
+
+variable "vm_name" {
+  description = "The name of the virtual machine"
+  type        = string
+}
+
+variable "vm_size" {
+  description = "The size of the virtual machine"
+  type        = string
+}
+
+variable "admin_username" {
+  description = "The username for the virtual machine"
+  type        = string
+}
+
+variable "admin_password" {
+  description = "The password for the virtual machine"
+  type        = string
+}
