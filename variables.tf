@@ -468,3 +468,75 @@ variable "lifecycles" {
   type        = list(object({ prefix_match = set(string), tier_to_cool_after_days = number, tier_to_archive_after_days = number, delete_after_days = number, snapshot_delete_after_days = number }))
   default     = []
 }
+
+########## Key Vault Vars ##########
+
+variable "kv_name" {
+  description = "Name of the Key Vault"
+  type        = string
+}
+
+variable "kv_skuname" {
+  description = "SKU name for the Key Vault"
+  type        = string
+}
+
+variable "enabled_for_deployment" {
+  description = "Is the Key Vault enabled for deployment?"
+  type        = bool
+}
+
+variable "enabled_for_disk_encryption" {
+  description = "Is the Key Vault enabled for disk encryption?"
+  type        = bool
+}
+
+variable "enabled_for_template_deployment" {
+  description = "Is the Key Vault enabled for template deployment?"
+  type        = bool
+}
+
+variable "soft_delete_retention_days" {
+  description = "The number of days that items should be retained for once soft deleted."
+  type        = number
+}
+
+variable "purge_protection_enabled" {
+  description = "Is the purge protection enabled?"
+  type        = bool
+}
+
+variable "enable_rbac_authorization" {
+  description = "Is the RBAC authorization enabled?"
+  type        = bool
+}
+
+variable "network_acls" {
+  description = "Network ACLs for the Key Vault"
+  type        = object({
+    bypass                     = list(string)
+    default_action             = string
+    ip_rules                   = list(string)
+    virtual_network_subnet_ids = list(string)
+  })
+}
+
+variable "principal_ids" {
+  description = "Principal IDs for the Key Vault"
+  type        = list(string)
+}
+
+variable "scope_id" {
+  description = "Scope ID for the Key Vault"
+  type        = string
+}
+
+variable "role_definition_name" {
+  description = "Role definition name for the Key Vault"
+  type        = string
+}
+
+variable "skip_service_principal_aad_check" {
+  description = "Skip service principal AAD check for the Key Vault"
+  type        = bool
+}

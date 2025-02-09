@@ -4,8 +4,8 @@ module "adf" {
   location            = var.location
   resource_group_name = var.resource_group_name
   dns_zone_link_name  = var.data_factory_dns_zone_link_name
-  virtual_network_id  = "/subscriptions/e8d19c40-8211-40d2-985f-800fd1402b70/resourceGroups/bkn301-production-resource-group/providers/Microsoft.Network/virtualNetworks/bkn301-production-vnet-north-italy"
-  subnet_id           = "/subscriptions/e8d19c40-8211-40d2-985f-800fd1402b70/resourceGroups/bkn301-production-resource-group/providers/Microsoft.Network/virtualNetworks/bkn301-production-vnet-north-italy/subnets/bkn301-production-vnet-north-italy-private-subnet-4"
+  virtual_network_id  = module.vnet.vnet_id
+  subnet_id           = module.vnet.public_subnet_id[0]
   ir_type             = var.integration_runtime_type
   ir_cname            = var.integration_custom_name
   ir_desp             = var.integration_runtime_description
@@ -76,4 +76,23 @@ module "sa" {
 
   # Encryption scope (optional)
   encryption_scopes = var.encryption_scopes
+}
+
+module "kv" {
+  source                            = "./modules/kv"
+  kv_name                           = var.kv_name
+  resource_group_name               = var.resource_group_name
+  location                          = var.location
+  skuname                           = var.kv_skuname
+  enabled_for_deployment            = var.enabled_for_deployment
+  enabled_for_disk_encryption       = var.enabled_for_disk_encryption
+  enabled_for_template_deployment   = var.enabled_for_template_deployment
+  soft_delete_retention_days        = var.soft_delete_retention_days
+  purge_protection_enabled          = var.purge_protection_enabled
+  enable_rbac_authorization         = var.enable_rbac_authorization
+  tags                              = var.tags
+  principal_ids                     = var.principal_ids
+  role_definition_name              = var.role_definition_name
+  scope_id                          = var.scope_id
+  skip_service_principal_aad_check  = var.skip_service_principal_aad_check
 }
