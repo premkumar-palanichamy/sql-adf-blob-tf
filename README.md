@@ -109,6 +109,9 @@ terraform apply -auto-approve
 
 :point_right: Validate Private Endpoints & Networking.
 
+Note: To learn more about the steps about execution of this setup kindly refer the below link:
+Execution Doc: [Onprem-to-AzureCloud-DataMigration-Analysis-Visualise-PowerBI](./docs/execution_docs.md)
+
 # License
 
 This project is licensed under the [MIT](https://opensource.org/license/MIT) - see the LICENSE file for details.
