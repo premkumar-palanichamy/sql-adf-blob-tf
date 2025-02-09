@@ -540,3 +540,39 @@ variable "skip_service_principal_aad_check" {
   description = "Skip service principal AAD check for the Key Vault"
   type        = bool
 }
+
+########## Log Analytics Workspace Vars ##########
+
+variable "law_sku" {
+  description = "SKU of the Log Analytics Workspace"
+  type        = string
+  default     = "PerGB2018"
+}
+
+variable "retention_in_days" {
+  description = "Retention in days for the Log Analytics Workspace"
+  type        = number
+  default     = 30
+}
+
+variable "managed_identity_type" {
+  description = "Type of the managed identity"
+  type        = string
+  default     = null
+}
+
+variable "managed_identity_ids" {
+  description = "Managed identity IDs"
+  type        = list(string)
+  default     = null
+}
+
+variable "law_name" {
+  description = "Name of the Log Analytics Workspace"
+  type        = string
+}
+
+variable "local_authentication_disabled" {
+  description = "Is local authentication disabled?"
+  type        = bool
+}

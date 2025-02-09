@@ -96,3 +96,16 @@ module "kv" {
   scope_id                          = var.scope_id
   skip_service_principal_aad_check  = var.skip_service_principal_aad_check
 }
+
+module "law" {
+  source              = "./modules/law"
+  name = var.law_name
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  law_sku             = var.law_sku
+  retention_in_days   = var.retention_in_days
+  tags                = var.tags
+  managed_identity_type = var.managed_identity_type
+  managed_identity_ids  = var.managed_identity_ids
+  local_authentication_disabled = var.local_authentication_disabled
+}
